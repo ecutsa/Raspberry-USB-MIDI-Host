@@ -1,6 +1,5 @@
-#/bin/bash
-sudo su
-cat > /usr/local/bin/connectall.sh << \EOF
+#!/bin/bash
+cat > /tmp/connectall.sh << \EOF
 #!/bin/bash
 client=$(aconnect -l | grep card | cut -d' ' -f2 | sed 's/[^0-9]*//g')
 for i in $client
@@ -17,13 +16,14 @@ do
         done
 done
 EOF
+chmod +x /tmp/connectall.sh
+sudo mv /tmp/connectall.sh /usr/local/bin/connectall.sh
 
-chmod +x /usr/local/bin/connectall.sh
-
-echo '"ACTION=="add|remove", SUBSYSTEM=="usb", DRIVER=="usb", RUN+="/usr/local/bin/connectall.rb"' > /etc/udev/rules.d/33-midiusb.rules
-udevadm control --reload
-service udev restart
-cat > /lib/systemd/system/midi.service << \EOF
+echo '"ACTION=="add|remove", SUBSYSTEM=="usb", DRIVER=="usb", RUN+="/usr/local/bin/connectall.sh"' > /tmp/33-midiusb.rules
+sudo mv /tmp/33-midiusb.rules /etc/udev/rules.d/
+sudo udevadm control --reload
+sudo service udev restart
+cat > /tmp/midi.service << \EOF
 [Unit]
 Description=Initial USB MIDI connect
 
@@ -33,8 +33,9 @@ ExecStart=/usr/local/bin/connectall.sh
 [Install]
 WantedBy=multi-user.target
 EOF
+sudo mv /tmp/midi.service /lib/systemd/system/
 
-systemctl daemon-reload
-systemctl enable midi.service
-systemctl start midi.service
-exit
+sudo systemctl daemon-reload
+sudo systemctl enable midi.service
+sudo systemctl start midi.service
+
