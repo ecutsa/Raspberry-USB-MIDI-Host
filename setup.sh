@@ -28,7 +28,7 @@ cat > /lib/systemd/system/midi.service << \EOF
 Description=Initial USB MIDI connect
 
 [Service]
-ExecStart=/usr/local/bin/connectall.rb
+ExecStart=/usr/local/bin/connectall.sh
 
 [Install]
 WantedBy=multi-user.target
@@ -37,3 +37,4 @@ EOF
 systemctl daemon-reload
 systemctl enable midi.service
 systemctl start midi.service
+exit
