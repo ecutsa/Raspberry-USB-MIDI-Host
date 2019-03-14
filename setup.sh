@@ -19,7 +19,7 @@ EOF
 chmod +x /tmp/connectall.sh
 sudo mv /tmp/connectall.sh /usr/local/bin/connectall.sh
 
-echo '"ACTION=="add|remove", SUBSYSTEM=="usb", DRIVER=="usb", RUN+="/usr/local/bin/connectall.sh"' > /tmp/33-midiusb.rules
+echo 'ACTION=="add|remove", SUBSYSTEM=="usb", DRIVER=="usb", RUN+="/usr/local/bin/connectall.sh"' > /tmp/33-midiusb.rules
 sudo mv /tmp/33-midiusb.rules /etc/udev/rules.d/
 sudo udevadm control --reload
 sudo service udev restart
