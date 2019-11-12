@@ -3,22 +3,26 @@
 ---
 
 
-description: Voici quelques instructions pour configurer un Raspberry Pi comme hôte MIDI pour un équipement musical USB.
+description: Here are some instructions for setting up a Raspberry Pi as a MIDI host for USB music equipment.
 ---
-## LE BUT (ZIDANE)
+## THE GOAL (ZIDANE)
 
-Synchroniser différents appareils USB sur le protocole MIDI.
-En gros faire un peu le taff de l'OP-Lab mais en DIY (je pense qu'il y a moyen d'utiliser la sortie mini-jack pour un CV-Out).
+Synchronize different USB devices to the MIDI protocol.
+Basically do a little bit of OP-Lab taffing but in DIY (I think there is a way to use the mini-jack output for a CV-Out).
+It also allows to synchronize MIDI USB and MIDI DIN.
 
-## CE DONT NOUS AVONS BESOIN
 
-- un raspberry pi avec [raspbian](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
-- une carte SD (minimum 2go)
-- un chargeur d'alimentation micro USB, envoyant au moins 2A (la plupart des chargeurs d'alimentation des smartphones modernes suffisent)
-- un accès [ssh au raspberry](https://www.raspberrypi.org/documentation/remote-access/ssh/) (une fois l'installation terminée, il n'est plus nécessaire)
-- des périphériques USB/MIDI pour tester
 
-## CONFIGURATION DE LA CONNEXION MIDI AUTOMATIQUE
+## WHAT WE NEED
+
+- a raspberry pi with [raspbian](https://www.raspberrypi.org/documentation/installation/installing-images/README.md)
+- an SD card (minimum 2GB)
+- a micro USB power charger, sending at least 2A (most modern smartphone power chargers are sufficient)
+- [ssh access to raspberry](https://www.raspberrypi.org/documentation/remote-access/ssh/) (once the installation is complete, it is no longer necessary)
+- USB/MIDI devices for testing
+
+
+## CONFIGURATION OF THE AUTOMATIC MIDI CONNECTION
 
 ```
 apt install git -y
@@ -26,27 +30,26 @@ git clone https://github.com/ecutsa/Raspberry-USB-MIDI-Host.git
 ./Raspberry-USB-MIDI-Host/setup.sh
 ```
 
- Pour tester la connexion automatique, vous pouvez utiliser la commande ``aconnect -l``
+ To test the automatic connection, you can use the command ``aconnect -l``
 
-## ACTIVATION DU MODE LECTURE SEULE
-Une fois l'installation terminée, il est conseillé d'activer la lecture seule de le raspberry pour éviter la possibilité de corruption des données lors du débranchement VNR de la source d'alimentation.
+## ACTIVATING READ-ONLY MODE
+Once the installation is complete, it is recommended to enable read-only on the raspberry to avoid the possibility of data corruption when disconnecting from the power source.
 
 ```
 git clone https://gitlab.com/larsfp/rpi-readonly
 sudo ./rpi-readonly/setup.sh
 ```
 
-Une fois votre configuration testée (essayez de brancher et débrancher divers périphériques MIDI, et testez la connexion avec la commande `aconnect -l`), vous pouvez activer le mode lecture seule avec la commande `ro`. Vous pouvez maintenant éteindre l'appareil en toute sécurité en le débranchant de la source d'alimentation.
+Once your configuration has been tested (try plugging in and out various MIDI devices, and test the connection with the `aconnect -l` command), you can activate read-only mode with the `ro` command. You can now safely turn off the unit by disconnecting it from the power source.
 
-Pour modifier des fichiers, vous pouvez désactiver le mode lecture seule avec la commande `rw`. N'oubliez pas de le remettre à `ro` avant de vous déconnecter.
+To edit files, you can disable read-only mode with the `rw` command. Don't forget to turn it back on before you disconnect.
 
 ## VOILÀ
 
-J'ai pu tester avec une Fireface 6i6, un OP-1 et un OP-Z. Si vous rencontrez un quelconque soucis n'hésitez pas a soumettre une [issue sur le Github](https://github.com/ecutsa/Raspberry-USB-MIDI-Host/issues).
+I was able to test with a Fireface 6i6, an OP-1 and an OP-Z. If you encounter any concerns do not hesitate to submit a [issue on the Github](https://github.com/ecutsa/Raspberry-USB-MIDI-Host/issues).
 
 Sources:
 
 - Original Ruby Script:  http://m635j520.blogspot.com/2017/01/using-raspberry-pi-as-midi-usb5-pin.html
 
 - Full Tuto (bluetooth + OLED): https://neuma.studio/rpi-as-midi-host.html
-
